@@ -1,0 +1,70 @@
+# =============================================================
+# S.T.R.A.N.D .gitignore
+# =============================================================
+
+# --- Secrets ---
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+.secrets.baseline
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+*.egg
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+htmlcov/
+.coverage
+coverage.xml
+
+# --- Data (large files) ---
+data/
+!data/.gitkeep
+*.tif
+*.tiff
+*.geotiff
+*.safe
+*.zip
+*.tar.gz
+*.nc
+*.hdf
+*.h5
+
+# --- ML Checkpoints (large) ---
+ml/checkpoints/*.pt
+ml/checkpoints/*.pth
+ml/checkpoints/*.onnx
+ml/checkpoints/*.bin
+
+# --- Generated Outputs ---
+*.mbtiles
+*.pdf
+logs/
+
+# --- Frontend ---
+dashboard/node_modules/
+dashboard/dist/
+dashboard/.vite/
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Docker ---
+*.log

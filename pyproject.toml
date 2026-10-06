@@ -1,0 +1,106 @@
+[project]
+name = "strand"
+version = "1.0.0"
+description = "Satellite Terrain Response & Network Damage — Flood damage mapping from space"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [
+    {name = "S.T.R.A.N.D Team"}
+]
+readme = "README.md"
+
+dependencies = [
+    # API Framework
+    "fastapi>=0.115.0",
+    "uvicorn[standard]>=0.30.0",
+    "pydantic>=2.7.0",
+    "pydantic-settings>=2.3.0",
+    "python-dotenv>=1.0.0",
+    "httpx>=0.27.0",
+    "websockets>=12.0",
+
+    # Task Queue
+    "celery[redis]>=5.4.0",
+    "redis>=5.0.0",
+
+    # Geospatial
+    "rasterio>=1.3.10",
+    "geopandas>=1.0.0",
+    "shapely>=2.0.4",
+    "pyproj>=3.6.0",
+    "fiona>=1.9.0",
+    "networkx>=3.3",
+
+    # Numerical & Scientific
+    "numpy>=1.26.0",
+    "scipy>=1.13.0",
+    "scikit-image>=0.23.0",
+    "pandas>=2.2.0",
+
+    # Database
+    "duckdb>=1.0.0",
+
+    # ML (optional — install separately for GPU)
+    "torch>=2.3.0",
+    "segmentation-models-pytorch>=0.3.3",
+
+    # Report Generation
+    "weasyprint>=62.0",
+    "jinja2>=3.1.0",
+    "matplotlib>=3.9.0",
+    "contextily>=1.6.0",
+
+    # LLM / Copilot
+    "langchain>=0.2.0",
+    "langchain-google-genai>=1.0.0",
+
+    # Utilities
+    "click>=8.1.0",
+    "rich>=13.7.0",
+    "tqdm>=4.66.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.2.0",
+    "pytest-cov>=5.0.0",
+    "pytest-asyncio>=0.23.0",
+    "pytest-benchmark>=4.0.0",
+    "ruff>=0.5.0",
+    "mypy>=1.10.0",
+    "pre-commit>=3.7.0",
+    "pip-audit>=2.7.0",
+]
+
+[project.scripts]
+strand-api = "strand.api.main:run"
+
+[build-system]
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.backends._legacy:_Backend"
+
+[tool.setuptools.packages.find]
+include = ["strand*"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "N", "W", "UP", "B"]
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+warn_unused_configs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = [
+    "slow: marks tests that take >10s",
+    "gpu: marks tests requiring GPU",
+    "network: marks tests requiring internet access",
+    "spatial: marks tests involving spatial operations",
+]
+filterwarnings = ["ignore::DeprecationWarning"]
