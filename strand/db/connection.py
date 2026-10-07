@@ -40,12 +40,25 @@ class PostgresConnectionWrapper:
     def description(self) -> Any:
         return self._cur.description if self._cur else None
 
+    @property
+    def closed(self) -> bool:
+        return bool(getattr(self._conn, "closed", False))
+
+    def _ensure_connected(self) -> None:
+        if self.closed:
+            import psycopg2
+            from strand.config import get_settings
+            settings = get_settings()
+            self._conn = psycopg2.connect(settings.database_url)
+            self._cur = None
+
     def execute(self, sql: str, params: list[Any] | tuple[Any, ...] | None = None) -> PostgresConnectionWrapper:
         # Convert DuckDB '?' parameter placeholders to PostgreSQL '%s'
         pg_sql = sql.replace("?", "%s")
-        self._cur = self._conn.cursor()
+        self._ensure_connected()
 
         try:
+            self._cur = self._conn.cursor()
             if params is not None:
                 self._cur.execute(pg_sql, tuple(params))
             else:
@@ -55,9 +68,29 @@ class PostgresConnectionWrapper:
             stripped = pg_sql.strip().upper()
             if not stripped.startswith(("SELECT", "WITH", "EXPLAIN")):
                 self._conn.commit()
-        except Exception:
-            self._conn.rollback()
-            raise
+        except Exception as err:
+            import psycopg2
+            if isinstance(err, (psycopg2.InterfaceError, psycopg2.OperationalError)):
+                # Serverless Neon dropped idle connection — reconnect and retry once
+                try:
+                    self._conn.close()
+                except Exception:
+                    pass
+                self._ensure_connected()
+                self._cur = self._conn.cursor()
+                if params is not None:
+                    self._cur.execute(pg_sql, tuple(params))
+                else:
+                    self._cur.execute(pg_sql)
+                stripped = pg_sql.strip().upper()
+                if not stripped.startswith(("SELECT", "WITH", "EXPLAIN")):
+                    self._conn.commit()
+            else:
+                try:
+                    self._conn.rollback()
+                except Exception:
+                    pass
+                raise
 
         return self
 
