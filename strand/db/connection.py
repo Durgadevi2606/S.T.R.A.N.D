@@ -45,15 +45,19 @@ class PostgresConnectionWrapper:
         pg_sql = sql.replace("?", "%s")
         self._cur = self._conn.cursor()
 
-        if params is not None:
-            self._cur.execute(pg_sql, tuple(params))
-        else:
-            self._cur.execute(pg_sql)
+        try:
+            if params is not None:
+                self._cur.execute(pg_sql, tuple(params))
+            else:
+                self._cur.execute(pg_sql)
 
-        # Auto-commit DDL and DML operations
-        stripped = pg_sql.strip().upper()
-        if not stripped.startswith(("SELECT", "WITH", "EXPLAIN")):
-            self._conn.commit()
+            # Auto-commit DDL and DML operations
+            stripped = pg_sql.strip().upper()
+            if not stripped.startswith(("SELECT", "WITH", "EXPLAIN")):
+                self._conn.commit()
+        except Exception:
+            self._conn.rollback()
+            raise
 
         return self
 

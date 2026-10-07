@@ -10,9 +10,10 @@ import logging
 import uuid
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, HTTPException, Security
+from fastapi import APIRouter, File, Form, HTTPException, Security, UploadFile
 
 from strand.api.auth import verify_api_key
+
 from strand.db.connection import get_db
 from strand.db.spatial_queries import (
     compute_analysis_statistics,
@@ -196,3 +197,46 @@ async def delete_analysis(
     db.execute("DELETE FROM analyses WHERE id = ?", [analysis_id])
 
     logger.info("Deleted analysis %s", analysis_id)
+
+
+@router.post(
+    "/upload-sar",
+    summary="Upload custom SAR radar image and execute damage extraction pipeline",
+)
+async def upload_sar_image(
+    file: UploadFile = File(...),
+    aoi_name: str = Form("Custom Radar Ingestion"),
+    disaster_date: str = Form(None),
+    bbox_west: float = Form(85.80),
+    bbox_south: float = Form(27.70),
+    bbox_east: float = Form(86.05),
+    bbox_north: float = Form(28.05),
+    api_key: str = Security(verify_api_key),
+):
+    """
+    Ingest a raw SAR radar image (GeoTIFF, PNG, JPEG), calibrate backscatter,
+    detect flood inundation, map damaged roads and bridges, identify isolated
+    villages, and extract viable helicopter landing zones.
+    """
+    from strand.pipeline.sar_uploader import process_uploaded_sar_image
+
+    try:
+        content = await file.read()
+        if not content:
+            raise HTTPException(status_code=400, detail="Uploaded file is empty")
+
+        result = process_uploaded_sar_image(
+            image_bytes=content,
+            filename=file.filename or "radar_upload.png",
+            aoi_name=aoi_name,
+            disaster_date=disaster_date,
+            bbox_west=bbox_west,
+            bbox_south=bbox_south,
+            bbox_east=bbox_east,
+            bbox_north=bbox_north,
+        )
+        return result
+    except Exception as e:
+        logger.error("Failed to process SAR upload: %s", e, exc_info=True)
+        raise HTTPException(status_code=500, detail=f"SAR processing failed: {str(e)}")
+

@@ -1,8 +1,83 @@
-/* S.T.R.A.N.D Dashboard — Global Reset */
+@import "tailwindcss";
+
+@theme {
+  --color-surface: #131315;
+  --color-surface-dim: #131315;
+  --color-surface-bright: #39393b;
+  --color-surface-container-lowest: #0e0e10;
+  --color-surface-container-low: #1c1b1d;
+  --color-surface-container: #201f22;
+  --color-surface-container-high: #2a2a2c;
+  --color-surface-container-highest: #353437;
+  --color-on-surface: #e5e1e4;
+  --color-on-surface-variant: #debfc1;
+  --color-outline: #a58a8c;
+  --color-outline-variant: #574143;
+  --color-primary: #ffb2b9;
+  --color-primary-container: #fb7185;
+  --color-secondary: #ffb2b7;
+  --color-secondary-container: #b50036;
+  --color-tertiary: #f8acff;
+  --color-tertiary-container: #e071f1;
+  --font-geist: "Geist", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
 html, body, #root {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
+  background-color: #131315;
+  color: #e5e1e4;
+  font-family: var(--font-geist);
   overflow: hidden;
+}
+
+/* Custom Scrollbars */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+::-webkit-scrollbar-track {
+  background: #131315;
+}
+::-webkit-scrollbar-thumb {
+  background: #353437;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ffb2b9;
+}
+
+/* Leaflet dark styling */
+.leaflet-container {
+  background: #0e0e10 !important;
+  font-family: var(--font-geist) !important;
+}
+
+.leaflet-popup-content-wrapper {
+  background: #1c1b1d !important;
+  color: #e5e1e4 !important;
+  border: 1px solid rgba(251, 113, 133, 0.3) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.6) !important;
+  padding: 4px !important;
+}
+
+.leaflet-popup-tip {
+  background: #1c1b1d !important;
+}
+
+.leaflet-popup-card {
+  font-size: 12px;
+  line-height: 1.5;
+  color: #e5e1e4;
+}
+
+.leaflet-popup-card strong {
+  color: #ffb2b9;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 4px;
 }
