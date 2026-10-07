@@ -75,9 +75,13 @@ class StrandSettings(BaseSettings):
     )
 
     # --- Database ---
+    database_url: str = Field(
+        default="",
+        description="PostgreSQL / Neon connection URL (e.g. postgresql://...)",
+    )
     database_path: str = Field(
         default="./data/strand.duckdb",
-        description="Path to DuckDB database file",
+        description="Path to DuckDB database file (used if database_url is empty)",
     )
 
     # --- Data Directories ---

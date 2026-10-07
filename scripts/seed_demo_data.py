@@ -45,9 +45,10 @@ def seed_demo_data() -> None:
     logger.info("Seeding demo analysis record [%s]...", DEMO_ANALYSIS_ID)
 
     # 1. Analyses Master Record
+    conn.execute("DELETE FROM analyses WHERE id = ?", [DEMO_ANALYSIS_ID])
     conn.execute(
         """
-        INSERT OR REPLACE INTO analyses (
+        INSERT INTO analyses (
             id, aoi_bbox, disaster_date, utm_zone, utm_epsg,
             s1_orbit_number, sar_pre_product, sar_post_product,
             sar_pre_date, sar_post_date, orbit_direction,

@@ -234,6 +234,9 @@ def run_migrations() -> None:
 
     # Split and execute each statement separately
     # DuckDB handles multi-statement strings, but splitting gives better error reporting
+    from strand.db.connection import _db_type
+    is_postgres = _db_type == "neon"
+
     statements = [s.strip() for s in SCHEMA_SQL.split(";") if s.strip()]
     executed_count = 0
     for i, stmt in enumerate(statements):
@@ -241,6 +244,8 @@ def run_migrations() -> None:
         clean_stmt = "\n".join(sql_lines).strip()
         if not clean_stmt:
             continue
+        if is_postgres:
+            clean_stmt = clean_stmt.replace("DOUBLE", "DOUBLE PRECISION")
         try:
             conn.execute(clean_stmt + ";")
             executed_count += 1
@@ -248,7 +253,7 @@ def run_migrations() -> None:
             logger.error("Migration statement %d failed: %s\nSQL: %s", i, e, clean_stmt[:200])
             raise
 
-    logger.info("Database migrations complete — %d statements executed", executed_count)
+    logger.info("Database migrations complete — %d statements executed (%s)", executed_count, _db_type)
 
 
 def drop_all_tables() -> None:
