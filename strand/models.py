@@ -527,3 +527,41 @@ class ErrorResponse(BaseModel):
     """Wrapped error response."""
 
     error: ErrorDetail
+
+
+# ─── Auth Schemas ───────────────────────────────────────────
+
+class OperatorRole(str, Enum):
+    """Operator functional roles in mission theater."""
+    COMMANDER = "commander"
+    ANALYST = "analyst"
+    FIELD_OPS = "field_ops"
+    LOGISTICS = "logistics"
+
+
+class LoginRequest(BaseModel):
+    """Operator authentication request schema."""
+    callsign: str = Field(..., min_length=2, max_length=50, description="Operator callsign")
+    api_key: str = Field(..., min_length=1, description="Security access API key")
+    role: OperatorRole = Field(default=OperatorRole.COMMANDER, description="Assigned mission role")
+    theater: str = Field(default="EMSR-927", description="Operational Theater code")
+
+
+class OperatorProfile(BaseModel):
+    """Authenticated operator metadata."""
+    callsign: str
+    role: str
+    role_display: str
+    clearance_level: str
+    theater: str
+    token: str
+    authenticated_at: datetime
+    permissions: list[str]
+
+
+class LoginResponse(BaseModel):
+    """Successful login response."""
+    authenticated: bool
+    operator: OperatorProfile
+    message: str
+

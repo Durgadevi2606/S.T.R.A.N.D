@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import LoginPage from './LoginPage'
 
 const API_BASE = 'http://localhost:8000/api/v1'
 const API_KEY = 'dev-key-change-in-production'
@@ -55,6 +56,38 @@ export default function App() {
   const map = useRef(null)
   const layerGroups = useRef({})
   const baseTileLayer = useRef(null)
+
+  // Operator Authentication State
+  const [operator, setOperator] = useState(() => {
+    try {
+      const saved = localStorage.getItem('strand_operator')
+      return saved ? JSON.parse(saved) : null
+    } catch {
+      return null
+    }
+  })
+  const [apiKey, setApiKey] = useState(() => localStorage.getItem('strand_api_key') || API_KEY)
+  const currentApiKey = apiKey || API_KEY
+
+  const handleLoginSuccess = (operatorProfile, newApiKey) => {
+    setOperator(operatorProfile)
+    setApiKey(newApiKey)
+    showToast(`Clearance Verified: ${operatorProfile.callsign} (${operatorProfile.role_display})`)
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('strand_operator')
+    localStorage.removeItem('strand_api_key')
+    if (map.current) {
+      map.current.remove()
+      map.current = null
+    }
+    setOperator(null)
+    setAnalyses([])
+    setSelectedAnalysis(null)
+    setAnalysisData(null)
+    showToast('Operator session ended.')
+  }
 
   // Primary Sidebar Navigation Module
   // 'tactical' | 'sar-analytics' | 'infrastructure' | 'mesh-hlz' | 'telemetry-logs'
@@ -147,8 +180,10 @@ export default function App() {
 
   // Initial Data Fetch
   useEffect(() => {
-    fetchAnalyses()
-  }, [])
+    if (operator) {
+      fetchAnalyses()
+    }
+  }, [operator])
 
   // Switch Basemap
   const switchBasemap = (type) => {
@@ -172,7 +207,7 @@ export default function App() {
   const fetchAnalyses = async () => {
     try {
       const res = await fetch(`${API_BASE}/analysis`, {
-        headers: { 'X-API-Key': API_KEY },
+        headers: { 'X-API-Key': currentApiKey },
       })
       if (res.ok) {
         const data = await res.json()
@@ -194,7 +229,7 @@ export default function App() {
 
     try {
       const detailRes = await fetch(`${API_BASE}/analysis/${analysisId}`, {
-        headers: { 'X-API-Key': API_KEY },
+        headers: { 'X-API-Key': currentApiKey },
       })
       if (detailRes.ok) {
         const detail = await detailRes.json()
@@ -214,7 +249,7 @@ export default function App() {
   const fetchPipelineLogs = async (analysisId) => {
     try {
       const res = await fetch(`${API_BASE}/analysis/${analysisId}/logs`, {
-        headers: { 'X-API-Key': API_KEY },
+        headers: { 'X-API-Key': currentApiKey },
       })
       if (res.ok) {
         const logs = await res.json()
@@ -238,7 +273,7 @@ export default function App() {
 
     for (const ep of layerEndpoints) {
       try {
-        const res = await fetch(ep.url, { headers: { 'X-API-Key': API_KEY } })
+        const res = await fetch(ep.url, { headers: { 'X-API-Key': currentApiKey } })
         if (!res.ok) continue
         const geojson = await res.json()
 
@@ -449,7 +484,7 @@ export default function App() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': API_KEY,
+          'X-API-Key': currentApiKey,
         },
         body: JSON.stringify({ query: q, language: 'en' }),
       })
@@ -473,7 +508,7 @@ export default function App() {
     try {
       const res = await fetch(`${API_BASE}/export/${selectedAnalysis}/sitrep`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-API-Key': API_KEY },
+        headers: { 'Content-Type': 'application/json', 'X-API-Key': currentApiKey },
         body: JSON.stringify({}),
       })
       if (res.ok) {
@@ -501,7 +536,7 @@ export default function App() {
     try {
       const res = await fetch(`${API_BASE}/export/${selectedAnalysis}/sms`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'X-API-Key': API_KEY },
+        headers: { 'Content-Type': 'application/json', 'X-API-Key': currentApiKey },
         body: JSON.stringify({ max_chars: 140 }),
       })
       if (res.ok) {
@@ -543,7 +578,7 @@ export default function App() {
 
       const res = await fetch(`${API_BASE}/analysis/upload-sar`, {
         method: 'POST',
-        headers: { 'X-API-Key': API_KEY },
+        headers: { 'X-API-Key': currentApiKey },
         body: formData,
       })
 
@@ -611,6 +646,10 @@ export default function App() {
       badge: `${pipelineLogs.length}`,
     },
   ]
+
+  if (!operator) {
+    return <LoginPage onLoginSuccess={handleLoginSuccess} />
+  }
 
   return (
     <div className="flex h-screen w-screen overflow-hidden bg-[#131315] text-[#e5e1e4]">
@@ -726,6 +765,30 @@ export default function App() {
         <div className="p-3 border-t border-[#574143]/20 bg-[#141416]/90 space-y-2">
           {!sidebarCollapsed ? (
             <>
+              {/* Operator Session Info in Footer */}
+              <div className="flex items-center justify-between pb-2 border-b border-[#574143]/20">
+                <div className="flex items-center gap-2 overflow-hidden">
+                  <div className="w-7 h-7 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-300 font-mono text-[10px] font-bold flex-shrink-0">
+                    {operator.callsign ? operator.callsign.substring(0, 2).toUpperCase() : 'OP'}
+                  </div>
+                  <div className="flex flex-col overflow-hidden">
+                    <span className="text-[11px] font-bold truncate text-[#e5e1e4] leading-tight">
+                      {operator.callsign}
+                    </span>
+                    <span className="text-[9px] font-mono text-rose-400 truncate leading-tight">
+                      {operator.role_display}
+                    </span>
+                  </div>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="text-zinc-500 hover:text-rose-400 p-1 rounded hover:bg-zinc-800 transition-colors cursor-pointer"
+                  title="Disconnect / Log Out"
+                >
+                  <span className="material-symbols-outlined text-[16px]">logout</span>
+                </button>
+              </div>
+
               <div className="flex items-center justify-between text-[11px] font-mono">
                 <span className="text-[#debfc1]/60 uppercase">Engine Health</span>
                 <span className="text-rose-300 font-semibold">99.98%</span>
@@ -743,9 +806,18 @@ export default function App() {
               </div>
             </>
           ) : (
-            <div className="flex flex-col items-center gap-1 text-[10px] font-mono text-emerald-400">
-              <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
-              <span className="text-[8px]">ONLINE</span>
+            <div className="flex flex-col items-center gap-2">
+              <button
+                onClick={handleLogout}
+                className="w-8 h-8 rounded-lg bg-[#201f22] hover:bg-rose-500/20 text-zinc-400 hover:text-rose-300 flex items-center justify-center transition-colors cursor-pointer"
+                title={`Logged in as ${operator.callsign} — Click to Log Out`}
+              >
+                <span className="material-symbols-outlined text-[16px]">logout</span>
+              </button>
+              <div className="flex flex-col items-center gap-1 text-[10px] font-mono text-emerald-400">
+                <span className="inline-block w-2 h-2 rounded-full bg-emerald-400"></span>
+                <span className="text-[8px]">ONLINE</span>
+              </div>
             </div>
           )}
         </div>
@@ -782,7 +854,7 @@ export default function App() {
             )}
           </div>
 
-          {/* Action triggers */}
+          {/* Action triggers & Operator Session */}
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowUploadModal(true)}
@@ -798,6 +870,28 @@ export default function App() {
               <span className="material-symbols-outlined text-[16px]">picture_as_pdf</span>
               <span>PDF SitRep</span>
             </button>
+
+            {/* Operator Session Badge */}
+            <div className="flex items-center gap-2 pl-3 border-l border-[#574143]/30">
+              <div className="w-7 h-7 rounded-full bg-rose-500/20 border border-rose-500/40 flex items-center justify-center text-rose-300 font-mono text-[10px] font-bold">
+                {operator.callsign ? operator.callsign.substring(0, 2).toUpperCase() : 'OP'}
+              </div>
+              <div className="hidden lg:flex flex-col text-left">
+                <span className="text-[11px] font-semibold text-[#e5e1e4] leading-tight">
+                  {operator.callsign}
+                </span>
+                <span className="text-[9px] font-mono text-rose-400 leading-tight">
+                  {operator.role_display}
+                </span>
+              </div>
+              <button
+                onClick={handleLogout}
+                className="text-zinc-500 hover:text-rose-400 p-1.5 rounded hover:bg-zinc-800 transition-colors cursor-pointer"
+                title="Disconnect / Terminate Session"
+              >
+                <span className="material-symbols-outlined text-[16px]">logout</span>
+              </button>
+            </div>
           </div>
         </header>
 

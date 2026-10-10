@@ -75,12 +75,14 @@ app = FastAPI(
 
 # ─── Middleware ──────────────────────────────────────────────
 
-# CORS
+# Routers
+from strand.api.routes.auth import router as auth_router
 from strand.api.routes.analysis import router as analysis_router
 from strand.api.routes.layers import router as layers_router
 from strand.api.routes.copilot import router as copilot_router
 from strand.api.routes.exports import router as exports_router
 
+app.include_router(auth_router)
 app.include_router(analysis_router)
 app.include_router(layers_router)
 app.include_router(copilot_router)
@@ -94,7 +96,7 @@ app.add_middleware(
         "http://127.0.0.1:5173",
     ],
     allow_methods=["GET", "POST", "DELETE", "OPTIONS"],
-    allow_headers=["X-API-Key", "Content-Type"],
+    allow_headers=["X-API-Key", "Content-Type", "Authorization"],
     allow_credentials=False,
     max_age=3600,
 )
