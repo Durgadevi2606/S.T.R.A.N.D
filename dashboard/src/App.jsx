@@ -619,38 +619,52 @@ export default function App() {
       {/* ═════════════════════════════════════════════════════════════ */}
       <aside
         className={`h-full bg-[#0e0e10] border-r border-[#574143]/25 flex flex-col justify-between transition-all duration-300 z-40 flex-shrink-0 ${
-          sidebarCollapsed ? 'w-18' : 'w-64'
+          sidebarCollapsed ? 'w-16' : 'w-64'
         }`}
       >
         {/* Sidebar Brand Header */}
         <div>
-          <div className="h-14 border-b border-[#574143]/20 flex items-center justify-between px-3.5 bg-[#0e0e10]/80">
-            <div className="flex items-center gap-2.5 overflow-hidden">
-              <div className="w-8 h-8 rounded-lg bg-[#201f22] border border-rose-500/40 flex items-center justify-center text-rose-300 shadow-[0_0_12px_rgba(251,113,133,0.18)] flex-shrink-0">
-                <span className="material-symbols-outlined text-[18px]">satellite_alt</span>
-              </div>
-              {!sidebarCollapsed && (
-                <div className="flex flex-col overflow-hidden">
-                  <div className="flex items-center gap-1.5">
-                    <span className="font-mono font-bold text-[14px] tracking-wider text-[#e5e1e4] uppercase">S.T.R.A.N.D</span>
-                    <span className="px-1 py-0.2 rounded bg-[#2a2a2c] font-mono text-[9px] text-rose-300 border border-rose-500/30">
-                      PROD
-                    </span>
+          <div
+            className={`h-14 border-b border-[#574143]/20 flex items-center ${
+              sidebarCollapsed ? 'justify-center px-2' : 'justify-between px-3.5'
+            } bg-[#0e0e10]/80`}
+          >
+            {!sidebarCollapsed ? (
+              <>
+                <div className="flex items-center gap-2.5 overflow-hidden">
+                  <div className="w-8 h-8 rounded-lg bg-[#201f22] border border-rose-500/40 flex items-center justify-center text-rose-300 shadow-[0_0_12px_rgba(251,113,133,0.18)] flex-shrink-0">
+                    <span className="material-symbols-outlined text-[18px]">satellite_alt</span>
                   </div>
-                  <span className="text-[10px] text-[#debfc1]/60 truncate">Disaster Intelligence</span>
+                  <div className="flex flex-col overflow-hidden">
+                    <div className="flex items-center gap-1.5">
+                      <span className="font-mono font-bold text-[14px] tracking-wider text-[#e5e1e4] uppercase">
+                        S.T.R.A.N.D
+                      </span>
+                      <span className="px-1 py-0.2 rounded bg-[#2a2a2c] font-mono text-[9px] text-rose-300 border border-rose-500/30">
+                        PROD
+                      </span>
+                    </div>
+                    <span className="text-[10px] text-[#debfc1]/60 truncate">Disaster Intelligence</span>
+                  </div>
                 </div>
-              )}
-            </div>
 
-            <button
-              onClick={() => setSidebarCollapsed(!sidebarCollapsed)}
-              className="text-zinc-400 hover:text-white p-1 rounded hover:bg-zinc-800 transition-colors cursor-pointer"
-              title={sidebarCollapsed ? 'Expand Sidebar' : 'Collapse Sidebar'}
-            >
-              <span className="material-symbols-outlined text-[18px]">
-                {sidebarCollapsed ? 'chevron_right' : 'chevron_left'}
-              </span>
-            </button>
+                <button
+                  onClick={() => setSidebarCollapsed(true)}
+                  className="text-zinc-400 hover:text-white p-1 rounded hover:bg-zinc-800 transition-colors cursor-pointer"
+                  title="Collapse Sidebar"
+                >
+                  <span className="material-symbols-outlined text-[18px]">chevron_left</span>
+                </button>
+              </>
+            ) : (
+              <button
+                onClick={() => setSidebarCollapsed(false)}
+                className="w-9 h-9 flex items-center justify-center text-zinc-400 hover:text-rose-300 rounded-lg hover:bg-zinc-800 transition-colors cursor-pointer"
+                title="Expand Sidebar"
+              >
+                <span className="material-symbols-outlined text-[20px]">chevron_right</span>
+              </button>
+            )}
           </div>
 
           {/* Module Navigation Menu */}
@@ -667,7 +681,9 @@ export default function App() {
                 <button
                   key={mod.id}
                   onClick={() => setActiveModule(mod.id)}
-                  className={`w-full flex items-center gap-2.5 p-2 rounded-md transition-all text-left cursor-pointer group relative ${
+                  className={`w-full flex items-center ${
+                    sidebarCollapsed ? 'justify-center p-2.5' : 'gap-2.5 p-2'
+                  } rounded-md transition-all text-left cursor-pointer group relative ${
                     isActive
                       ? 'bg-[#201f22] text-rose-300 border-l-2 border-rose-400 font-semibold shadow-sm'
                       : 'text-[#debfc1]/75 hover:bg-[#1c1b1d] hover:text-[#e5e1e4]'
