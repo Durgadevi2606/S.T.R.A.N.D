@@ -145,10 +145,26 @@ export default function App() {
     setTimeout(() => setToast({ show: false, message: '' }), 3500)
   }
 
-  // Initialize Map (only when on tactical overview)
+  // Initialize Leaflet Map (runs on tactical overview whenever operator is authenticated)
   useEffect(() => {
+    if (!operator) return
     if (activeModule !== 'tactical') return
-    if (map.current || !mapContainer.current) return
+    if (!mapContainer.current) return
+
+    // Clean up any stale map instance
+    if (map.current) {
+      try {
+        map.current.remove()
+      } catch (e) {
+        console.warn('Map cleanup error:', e)
+      }
+      map.current = null
+    }
+
+    // Leaflet tags the DOM element with _leaflet_id; clear it on re-mount to avoid crashes
+    if (mapContainer.current._leaflet_id) {
+      delete mapContainer.current._leaflet_id
+    }
 
     const m = L.map(mapContainer.current, {
       center: NEPAL_CENTER,
@@ -159,7 +175,7 @@ export default function App() {
     L.control.zoom({ position: 'topright' }).addTo(m)
     L.control.scale({ imperial: false, position: 'bottomright' }).addTo(m)
 
-    const initialCfg = BASEMAP_CONFIGS.satellite
+    const initialCfg = BASEMAP_CONFIGS[basemap] || BASEMAP_CONFIGS.satellite
     const initialTile = L.tileLayer(initialCfg.url, {
       attribution: initialCfg.attribution,
       maxZoom: initialCfg.maxZoom,
@@ -168,15 +184,37 @@ export default function App() {
     baseTileLayer.current = initialTile
     map.current = m
 
+    // Force Leaflet to calculate container bounds once rendered
+    m.invalidateSize()
+    const resizeTimer = setTimeout(() => {
+      if (m && map.current) {
+        m.invalidateSize()
+      }
+    }, 200)
+
     if (selectedAnalysis) {
       loadAllLayers(selectedAnalysis)
     }
 
     return () => {
-      m.remove()
-      map.current = null
+      clearTimeout(resizeTimer)
+      if (map.current) {
+        try {
+          map.current.remove()
+        } catch (e) {
+          console.warn('Map cleanup error:', e)
+        }
+        map.current = null
+      }
     }
-  }, [activeModule])
+  }, [activeModule, operator])
+
+  // Synchronize active analysis layers to map whenever selectedAnalysis changes
+  useEffect(() => {
+    if (selectedAnalysis && map.current && activeModule === 'tactical') {
+      loadAllLayers(selectedAnalysis)
+    }
+  }, [selectedAnalysis])
 
   // Initial Data Fetch
   useEffect(() => {
@@ -283,6 +321,9 @@ export default function App() {
         if (ep.name === 'hlz') setHlzList(geojson.features || [])
 
         if (map.current) {
+          if (layerGroups.current[ep.name] && map.current.hasLayer(layerGroups.current[ep.name])) {
+            map.current.removeLayer(layerGroups.current[ep.name])
+          }
           const leafletLayer = createLeafletLayer(ep.name, geojson)
           layerGroups.current[ep.name] = leafletLayer
           if (activeLayers[ep.name] && leafletLayer) {
