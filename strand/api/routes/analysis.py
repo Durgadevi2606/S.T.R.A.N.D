@@ -141,6 +141,34 @@ async def get_analysis(
 
 
 @router.get(
+    "/{analysis_id}/logs",
+    summary="Get pipeline logs for an analysis",
+)
+async def get_analysis_logs(
+    analysis_id: str,
+    api_key: str = Security(verify_api_key),
+):
+    """Fetch pipeline execution logs ordered by time."""
+    db = get_db()
+    rows = db.execute(
+        "SELECT id, phase, status, message, progress_pct, logged_at "
+        "FROM pipeline_logs WHERE analysis_id = ? ORDER BY logged_at ASC",
+        [analysis_id]
+    ).fetchall()
+    return [
+        {
+            "id": r[0],
+            "phase": r[1],
+            "status": r[2],
+            "message": r[3],
+            "progress_pct": r[4],
+            "logged_at": r[5].isoformat() if hasattr(r[5], "isoformat") else str(r[5]),
+        }
+        for r in rows
+    ]
+
+
+@router.get(
     "",
     response_model=AnalysisListResponse,
     summary="List all analyses",
