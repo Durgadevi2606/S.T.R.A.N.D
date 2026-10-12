@@ -19,7 +19,12 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 class CDSESettings(BaseSettings):
     """Copernicus Data Space Ecosystem API configuration."""
 
-    model_config = SettingsConfigDict(env_prefix="CDSE_")
+    model_config = SettingsConfigDict(
+        env_prefix="CDSE_",
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
     client_id: str = Field(default="", description="CDSE OAuth2 client ID")
     client_secret: str = Field(default="", description="CDSE OAuth2 client secret")
@@ -40,10 +45,15 @@ class CDSESettings(BaseSettings):
 class GeminiSettings(BaseSettings):
     """Google Gemini LLM configuration for the Copilot module."""
 
-    model_config = SettingsConfigDict(env_prefix="GEMINI_")
+    model_config = SettingsConfigDict(
+        env_prefix="GEMINI_",
+        env_file=".env",
+        env_file_encoding="utf-8",
+        extra="ignore",
+    )
 
     api_key: str = Field(default="", description="Gemini API key")
-    model: str = Field(default="gemini-2.5-pro", description="Gemini model name")
+    model: str = Field(default="gemini-flash-lite-latest", description="Gemini model name")
 
 
 class StrandSettings(BaseSettings):

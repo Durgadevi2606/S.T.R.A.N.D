@@ -355,6 +355,7 @@ class CopilotQueryRequest(BaseModel):
 
     query: str = Field(..., max_length=500, description="Natural language question")
     language: str = Field(default="en", description="Query language: 'en' or 'ne'")
+    engine_mode: str = Field(default="auto", description="Execution engine: 'auto' | 'gemini' | 'local'")
 
     @field_validator("query")
     @classmethod
@@ -388,6 +389,9 @@ class CopilotQueryResponse(BaseModel):
     citation: SQLCitation | None = None
     hallucination_check: bool = True
     confidence: str = "high"
+    engine_used: str = "gemini"
+    engine_label: str = "Google Gemini AI"
+    is_fallback: bool = False
 
 
 # ─── Export Schemas ──────────────────────────────────────────

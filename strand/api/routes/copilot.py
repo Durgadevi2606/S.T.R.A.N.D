@@ -44,6 +44,7 @@ async def copilot_query(
         result = await engine.answer(
             query=request.query,
             language=request.language,
+            engine_mode=request.engine_mode,
         )
 
         citation = None
@@ -62,6 +63,9 @@ async def copilot_query(
             citation=citation,
             hallucination_check=result.get("hallucination_check", True),
             confidence=result.get("confidence", "high"),
+            engine_used=result.get("engine_used", "local"),
+            engine_label=result.get("engine_label", "Local Offline Engine"),
+            is_fallback=result.get("is_fallback", False),
         )
 
     except Exception as e:

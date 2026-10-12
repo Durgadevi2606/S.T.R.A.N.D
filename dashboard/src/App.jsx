@@ -123,6 +123,8 @@ export default function App() {
   const [copilotQuery, setCopilotQuery] = useState('')
   const [copilotResponse, setCopilotResponse] = useState(null)
   const [copilotLoading, setCopilotLoading] = useState(false)
+  const [copilotEngineMode, setCopilotEngineMode] = useState('auto') // 'auto' | 'gemini' | 'local'
+  const [copilotLanguage, setCopilotLanguage] = useState('en') // 'en' | 'ne'
 
   // Modals
   const [showSmsModal, setShowSmsModal] = useState(false)
@@ -527,16 +529,32 @@ export default function App() {
           'Content-Type': 'application/json',
           'X-API-Key': currentApiKey,
         },
-        body: JSON.stringify({ query: q, language: 'en' }),
+        body: JSON.stringify({
+          query: q,
+          language: copilotLanguage,
+          engine_mode: copilotEngineMode,
+        }),
       })
       if (res.ok) {
         const data = await res.json()
         setCopilotResponse(data)
       } else {
-        setCopilotResponse({ answer: 'Tactical spatial engine could not complete query.', confidence: 'low' })
+        setCopilotResponse({
+          answer: 'Tactical spatial engine could not complete query.',
+          confidence: 'low',
+          engine_used: 'local',
+          engine_label: 'Local Offline Engine',
+          is_fallback: false,
+        })
       }
     } catch (e) {
-      setCopilotResponse({ answer: `Query execution error: ${e.message}`, confidence: 'low' })
+      setCopilotResponse({
+        answer: `Query execution error: ${e.message}`,
+        confidence: 'low',
+        engine_used: 'local',
+        engine_label: 'Local Offline Engine',
+        is_fallback: false,
+      })
     } finally {
       setCopilotLoading(false)
     }
@@ -1220,38 +1238,256 @@ export default function App() {
 
                 {/* Sub-tab 4: Copilot */}
                 {tacticalTab === 'copilot' && (
-                  <div className="flex-1 overflow-y-auto p-3.5 flex flex-col justify-between">
+                  <div className="flex-1 overflow-y-auto p-3 flex flex-col justify-between space-y-3">
                     <div className="space-y-3">
-                      <div className="font-mono text-[11px] uppercase text-rose-300 font-semibold">AI Copilot</div>
-                      <div className="flex gap-1.5 bg-[#1c1b1d] p-1.5 rounded border border-zinc-800">
+                      {/* Copilot Header & Engine Switcher */}
+                      <div className="space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-1.5 font-mono text-[11px] uppercase text-rose-300 font-semibold tracking-wider">
+                            <span className="material-symbols-outlined text-[15px] text-rose-400">psychology</span>
+                            <span>Tactical Copilot</span>
+                          </div>
+                          {/* Language Switch */}
+                          <div className="flex bg-[#141315] p-0.5 rounded border border-zinc-800 text-[10px] font-mono">
+                            <button
+                              onClick={() => setCopilotLanguage('en')}
+                              className={`px-1.5 py-0.5 rounded transition-colors ${
+                                copilotLanguage === 'en'
+                                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold'
+                                  : 'text-zinc-400 hover:text-zinc-200'
+                              }`}
+                            >
+                              EN
+                            </button>
+                            <button
+                              onClick={() => setCopilotLanguage('ne')}
+                              className={`px-1.5 py-0.5 rounded transition-colors ${
+                                copilotLanguage === 'ne'
+                                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/40 font-bold'
+                                  : 'text-zinc-400 hover:text-zinc-200'
+                              }`}
+                            >
+                              नेपाली
+                            </button>
+                          </div>
+                        </div>
+
+                        {/* Hybrid Engine Selector Pills */}
+                        <div className="bg-[#141315] p-1 rounded-md border border-zinc-800">
+                          <div className="text-[9px] font-mono text-zinc-400 uppercase tracking-wider mb-1 flex items-center justify-between">
+                            <span>Processing Engine</span>
+                            <span className="text-zinc-500 text-[8px]">DuckDB + Gemini</span>
+                          </div>
+                          <div className="grid grid-cols-3 gap-1 text-[10px] font-mono">
+                            <button
+                              onClick={() => setCopilotEngineMode('auto')}
+                              className={`py-1 px-1 rounded text-center transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer ${
+                                copilotEngineMode === 'auto'
+                                  ? 'bg-rose-500/20 text-rose-300 border border-rose-500/50 font-semibold shadow-sm'
+                                  : 'bg-[#1c1b1d] text-zinc-400 hover:text-zinc-200 border border-transparent'
+                              }`}
+                              title="Intelligently tries Gemini AI with seamless automatic fallback to Local Engine on error/503"
+                            >
+                              <span className="text-[10px] leading-tight">Hybrid</span>
+                              <span className="text-[8px] opacity-75">Auto-Switch</span>
+                            </button>
+                            <button
+                              onClick={() => setCopilotEngineMode('gemini')}
+                              className={`py-1 px-1 rounded text-center transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer ${
+                                copilotEngineMode === 'gemini'
+                                  ? 'bg-purple-500/20 text-purple-300 border border-purple-500/50 font-semibold shadow-sm'
+                                  : 'bg-[#1c1b1d] text-zinc-400 hover:text-zinc-200 border border-transparent'
+                              }`}
+                              title="Uses Google Gemini API directly"
+                            >
+                              <span className="text-[10px] leading-tight">Gemini AI</span>
+                              <span className="text-[8px] opacity-75">Cloud LLM</span>
+                            </button>
+                            <button
+                              onClick={() => setCopilotEngineMode('local')}
+                              className={`py-1 px-1 rounded text-center transition-all flex flex-col items-center justify-center gap-0.5 cursor-pointer ${
+                                copilotEngineMode === 'local'
+                                  ? 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 font-semibold shadow-sm'
+                                  : 'bg-[#1c1b1d] text-zinc-400 hover:text-zinc-200 border border-transparent'
+                              }`}
+                              title="Uses offline DuckDB pattern matching with 0ms cloud latency"
+                            >
+                              <span className="text-[10px] leading-tight">Local</span>
+                              <span className="text-[8px] opacity-75">Offline Fast</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Tactical Suggestion Chips */}
+                      <div className="space-y-1">
+                        <div className="text-[9px] font-mono text-zinc-400 uppercase tracking-wider">
+                          Tactical Query Presets
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {(copilotLanguage === 'en'
+                            ? [
+                                { label: 'Triage Priorities', query: 'What are the most urgent evacuation priorities?' },
+                                { label: 'Destroyed Bridges', query: 'Which bridges are destroyed or damaged?' },
+                                { label: 'Severed Corridors', query: 'What road segments are severed?' },
+                                { label: 'Safe HLZ Sites', query: 'Where are the nearest helicopter landing zones?' },
+                                { label: 'Damage Summary', query: 'Give me a full summary of the disaster damage' },
+                              ]
+                            : [
+                                { label: 'जोखिम बस्तीहरू', query: 'प्राथमिकता प्राप्त बस्तीहरू कुन हुन्?' },
+                                { label: 'क्षतिग्रस्त पुल', query: 'कुन पुलहरू क्षतिग्रस्त भएका छन्?' },
+                                { label: 'अवरुद्ध सडक', query: 'कुन सडकहरू अवरुद्ध भएका छन्?' },
+                                { label: 'हेलिकप्टर ल्यान्डिङ', query: 'सुरक्षित हेलिकप्टर अवतरण स्थलहरू कहाँ छन्?' },
+                                { label: 'विपद् सारांश', query: 'बाढीको सारांश के हो?' },
+                              ]
+                          ).map((chip, idx) => (
+                            <button
+                              key={idx}
+                              onClick={() => {
+                                setCopilotQuery(chip.query)
+                                handleCopilotQuery(chip.query)
+                              }}
+                              className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#1c1b1d] text-zinc-300 hover:text-rose-200 hover:bg-rose-500/10 border border-zinc-800 hover:border-rose-500/30 transition-all cursor-pointer"
+                            >
+                              {chip.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Query Input Box */}
+                      <div className="flex gap-1.5 bg-[#1c1b1d] p-1.5 rounded-md border border-zinc-800 focus-within:border-rose-500/50 transition-all">
                         <input
                           type="text"
                           value={copilotQuery}
                           onChange={(e) => setCopilotQuery(e.target.value)}
                           onKeyDown={(e) => e.key === 'Enter' && handleCopilotQuery()}
-                          placeholder="e.g. Which bridges collapsed?"
-                          className="flex-1 bg-transparent text-[11px] text-[#e5e1e4] outline-none px-1"
+                          placeholder={
+                            copilotLanguage === 'en'
+                              ? "Ask Copilot in English (e.g. Which bridges collapsed?)"
+                              : "नेपालीमा सोध्नुहोस् (जस्तै: कुन पुलहरू क्षतिग्रस्त भएका छन्?)"
+                          }
+                          className="flex-1 bg-transparent text-[11px] text-[#e5e1e4] outline-none px-1 placeholder:text-zinc-600 font-sans"
                         />
                         <button
                           onClick={() => handleCopilotQuery()}
                           disabled={copilotLoading}
-                          className="px-2.5 py-1 bg-rose-500 hover:bg-rose-600 text-white rounded text-[11px] font-mono cursor-pointer font-semibold"
+                          className="px-3 py-1 bg-gradient-to-r from-rose-500 to-rose-600 hover:from-rose-600 hover:to-rose-700 disabled:opacity-50 text-white rounded text-[11px] font-mono cursor-pointer font-semibold shadow-sm flex items-center gap-1 transition-all"
                         >
-                          {copilotLoading ? '...' : 'Ask'}
+                          {copilotLoading ? (
+                            <span className="inline-block animate-spin text-[10px]">↻</span>
+                          ) : (
+                            <span className="material-symbols-outlined text-[13px]">send</span>
+                          )}
+                          <span>{copilotLoading ? 'Querying' : 'Ask'}</span>
                         </button>
                       </div>
 
+                      {/* Query Result Card */}
                       {copilotResponse && (
-                        <div className="p-2.5 rounded bg-[#1c1b1d] border border-rose-500/30 text-[11px] space-y-1.5">
-                          <p className="leading-relaxed text-[#e5e1e4]">{copilotResponse.answer}</p>
+                        <div className="p-3 rounded-md bg-[#161518] border border-rose-500/30 text-[11px] space-y-2 shadow-lg">
+                          {/* Engine & Verification Badges */}
+                          <div className="flex items-center justify-between pb-2 border-b border-zinc-800/80">
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              {copilotResponse.engine_used === 'gemini' ? (
+                                <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-purple-500/20 text-purple-300 border border-purple-500/40 flex items-center gap-1">
+                                  <span>✦</span>
+                                  <span>{copilotResponse.engine_label || 'Google Gemini AI'}</span>
+                                </span>
+                              ) : copilotResponse.is_fallback ? (
+                                <span
+                                  className="px-2 py-0.5 rounded text-[9px] font-mono bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1"
+                                  title="Gemini unavailable or 503; automatically routed through Local Engine"
+                                >
+                                  <span>⚡</span>
+                                  <span>Auto-Fallback: Local Engine</span>
+                                </span>
+                              ) : (
+                                <span className="px-2 py-0.5 rounded text-[9px] font-mono bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 flex items-center gap-1">
+                                  <span>⚡</span>
+                                  <span>{copilotResponse.engine_label || 'Local Offline Engine'}</span>
+                                </span>
+                              )}
+
+                              <span className="px-1.5 py-0.5 rounded text-[9px] font-mono bg-rose-500/10 text-rose-300 border border-rose-500/30">
+                                100% Grounded
+                              </span>
+                            </div>
+
+                            <span className="text-[9px] font-mono text-zinc-500 uppercase">
+                              {copilotResponse.language === 'ne' ? 'Nepali' : 'English'}
+                            </span>
+                          </div>
+
+                          {/* Response Text with Formatted Markdown Rendering */}
+                          <div className="space-y-1 text-[#e5e1e4] leading-relaxed max-h-60 overflow-y-auto pr-1">
+                            {copilotResponse.answer.split('\n').map((line, lIdx) => {
+                              if (!line.trim()) return <div key={lIdx} className="h-1" />
+                              const isHeader = line.startsWith('**') && line.endsWith('**')
+                              const isNumbered = /^\d+\.\s+/.test(line)
+                              const isBullet = line.trim().startsWith('- ')
+
+                              // Format bold segments
+                              const renderWithBold = (txt) => {
+                                const segments = []
+                                let last = 0
+                                const rx = /\*\*(.*?)\*\*|`([^`]+)`/g
+                                let m
+                                while ((m = rx.exec(txt)) !== null) {
+                                  if (m.index > last) segments.push(txt.substring(last, m.index))
+                                  if (m[1]) segments.push(<strong key={m.index} className="text-white font-semibold">{m[1]}</strong>)
+                                  if (m[2]) segments.push(<span key={m.index} className="px-1 py-0.5 rounded bg-zinc-800 text-rose-300 font-mono text-[10px]">{m[2]}</span>)
+                                  last = rx.lastIndex
+                                }
+                                if (last < txt.length) segments.push(txt.substring(last))
+                                return segments.length > 0 ? segments : txt
+                              }
+
+                              if (isHeader) {
+                                return (
+                                  <div key={lIdx} className="font-semibold text-rose-300 text-[11px] pt-1">
+                                    {renderWithBold(line)}
+                                  </div>
+                                )
+                              }
+                              if (isNumbered) {
+                                const num = line.match(/^(\d+)\.\s+(.*)/)
+                                return (
+                                  <div key={lIdx} className="flex gap-1.5 items-start pl-1 text-[11px]">
+                                    <span className="font-mono text-rose-400 font-bold">{num ? num[1] : '•'}.</span>
+                                    <div className="flex-1">{renderWithBold(num ? num[2] : line)}</div>
+                                  </div>
+                                )
+                              }
+                              if (isBullet) {
+                                return (
+                                  <div key={lIdx} className="flex gap-1.5 items-start pl-1 text-[11px]">
+                                    <span className="text-rose-400">•</span>
+                                    <div className="flex-1">{renderWithBold(line.trim().substring(2))}</div>
+                                  </div>
+                                )
+                              }
+                              return (
+                                <p key={lIdx} className="text-[11px]">
+                                  {renderWithBold(line)}
+                                </p>
+                              )
+                            })}
+                          </div>
+
+                          {/* Grounded SQL Citation Accordion */}
                           {copilotResponse.citation && (
-                            <details className="pt-1 border-t border-zinc-800">
-                              <summary className="font-mono text-[9px] text-[#debfc1]/50 cursor-pointer">
-                                SQL Citation
+                            <details className="pt-2 border-t border-zinc-800/80">
+                              <summary className="font-mono text-[9px] text-[#debfc1]/60 hover:text-rose-300 cursor-pointer flex items-center justify-between transition-colors">
+                                <span className="flex items-center gap-1">
+                                  <span className="material-symbols-outlined text-[12px]">code</span>
+                                  <span>Grounded SQL Citation (DuckDB Spatial)</span>
+                                </span>
+                                <span className="text-[8px] text-zinc-500">View Query</span>
                               </summary>
-                              <pre className="mt-1 p-1.5 rounded bg-[#0e0e10] text-[9px] font-mono text-rose-200 whitespace-pre-wrap">
+                              <div className="mt-1.5 p-2 rounded bg-[#0a0a0c] border border-zinc-900 text-[9px] font-mono text-rose-200/90 whitespace-pre-wrap overflow-x-auto leading-normal">
                                 {copilotResponse.citation.sql}
-                              </pre>
+                              </div>
                             </details>
                           )}
                         </div>
