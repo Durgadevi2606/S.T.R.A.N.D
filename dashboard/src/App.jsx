@@ -3,7 +3,7 @@ import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import LoginPage from './LoginPage'
 
-const API_BASE = 'http://localhost:8000/api/v1'
+const API_BASE = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000/api/v1'
 const API_KEY = 'dev-key-change-in-production'
 
 const LAYER_COLORS = {
