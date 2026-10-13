@@ -33,6 +33,7 @@ data/
 *.geotiff
 *.safe
 *.zip
+!dashboard/public/demo/*.zip
 *.tar.gz
 *.nc
 *.hdf

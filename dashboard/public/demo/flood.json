@@ -8,50 +8,34 @@
         "coordinates": [
           [
             [
-              85.9,
-              27.85
+              85.89668,
+              27.88594
             ],
             [
-              85.908,
-              27.865
+              85.97187,
+              27.88594
             ],
             [
-              85.925,
-              27.9
+              85.97187,
+              27.9502
             ],
             [
-              85.932,
-              27.93
+              85.89668,
+              27.9502
             ],
             [
-              85.928,
-              27.935
-            ],
-            [
-              85.918,
-              27.905
-            ],
-            [
-              85.902,
-              27.87
-            ],
-            [
-              85.895,
-              27.852
-            ],
-            [
-              85.9,
-              27.85
+              85.89668,
+              27.88594
             ]
           ]
         ]
       },
       "properties": {
-        "id": "nepal-bhotekoshi-20260826-f1",
-        "area_m2": 6800000.0,
-        "area_km2": 6.8,
-        "confidence": 0.92,
-        "detection_method": "ensemble_majority",
+        "id": "flood-sar-import-20261007-6a83b3-10",
+        "area_m2": 59533670.997618966,
+        "area_km2": 59.5337,
+        "confidence": 0.85,
+        "detection_method": "sar_backscatter_ensemble",
         "mndwi_validated": true
       }
     },
@@ -62,43 +46,35 @@
         "coordinates": [
           [
             [
-              85.932,
-              27.93
+              85.85664,
+              27.98711
             ],
             [
-              85.945,
-              27.96
+              85.8625,
+              27.98711
             ],
             [
-              85.952,
-              27.985
+              85.8625,
+              27.99258
             ],
             [
-              85.946,
-              27.99
+              85.85664,
+              27.99258
             ],
             [
-              85.938,
-              27.962
-            ],
-            [
-              85.926,
-              27.933
-            ],
-            [
-              85.932,
-              27.93
+              85.85664,
+              27.98711
             ]
           ]
         ]
       },
       "properties": {
-        "id": "nepal-bhotekoshi-20260826-f2",
-        "area_m2": 5200000.0,
-        "area_km2": 5.2,
-        "confidence": 0.88,
-        "detection_method": "ensemble_majority",
-        "mndwi_validated": false
+        "id": "flood-sar-import-20261007-6a83b3-6",
+        "area_m2": 394807.4340821851,
+        "area_km2": 0.3948,
+        "confidence": 0.93,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
       }
     },
     {
@@ -108,42 +84,376 @@
         "coordinates": [
           [
             [
-              85.885,
-              27.8
+              85.89766,
+              27.98164
             ],
             [
-              85.892,
-              27.825
+              85.90059,
+              27.98164
             ],
             [
-              85.9,
-              27.85
+              85.90059,
+              27.98984
             ],
             [
-              85.895,
-              27.852
+              85.89766,
+              27.98984
             ],
             [
-              85.886,
-              27.828
-            ],
-            [
-              85.88,
-              27.802
-            ],
-            [
-              85.885,
-              27.8
+              85.89766,
+              27.98164
             ]
           ]
         ]
       },
       "properties": {
-        "id": "nepal-bhotekoshi-20260826-f3",
-        "area_m2": 2850000.0,
-        "area_km2": 2.85,
-        "confidence": 0.84,
-        "detection_method": "otsu_sar",
+        "id": "flood-sar-import-20261007-6a83b3-7",
+        "area_m2": 296105.5755615748,
+        "area_km2": 0.2961,
+        "confidence": 0.85,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.88691,
+              27.95703
+            ],
+            [
+              85.8918,
+              27.95703
+            ],
+            [
+              85.8918,
+              27.96113
+            ],
+            [
+              85.88691,
+              27.96113
+            ],
+            [
+              85.88691,
+              27.95703
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "flood-sar-import-20261007-6a83b3-9",
+        "area_m2": 246754.64630131228,
+        "area_km2": 0.2468,
+        "confidence": 0.93,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.91133,
+              28.00078
+            ],
+            [
+              85.91719,
+              28.00078
+            ],
+            [
+              85.91719,
+              28.00352
+            ],
+            [
+              85.91133,
+              28.00352
+            ],
+            [
+              85.91133,
+              28.00078
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "flood-sar-import-20261007-6a83b3-5",
+        "area_m2": 197403.7170412208,
+        "area_km2": 0.1974,
+        "confidence": 0.89,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              86.0334,
+              28.00625
+            ],
+            [
+              86.0373,
+              28.00625
+            ],
+            [
+              86.0373,
+              28.01035
+            ],
+            [
+              86.0334,
+              28.01035
+            ],
+            [
+              86.0334,
+              28.00625
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "flood-sar-import-20261007-6a83b3-4",
+        "area_m2": 197403.71704104982,
+        "area_km2": 0.1974,
+        "confidence": 0.85,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.85566,
+              28.04316
+            ],
+            [
+              85.85859,
+              28.04316
+            ],
+            [
+              85.85859,
+              28.04863
+            ],
+            [
+              85.85566,
+              28.04863
+            ],
+            [
+              85.85566,
+              28.04316
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "flood-sar-import-20261007-6a83b3-2",
+        "area_m2": 197403.71704096431,
+        "area_km2": 0.1974,
+        "confidence": 0.89,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              86.0041,
+              28.04043
+            ],
+            [
+              86.00703,
+              28.04043
+            ],
+            [
+              86.00703,
+              28.0459
+            ],
+            [
+              86.0041,
+              28.0459
+            ],
+            [
+              86.0041,
+              28.04043
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "flood-sar-import-20261007-6a83b3-3",
+        "area_m2": 197403.71704096431,
+        "area_km2": 0.1974,
+        "confidence": 0.93,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.96211,
+              27.96113
+            ],
+            [
+              85.96406,
+              27.96113
+            ],
+            [
+              85.96406,
+              27.96797
+            ],
+            [
+              85.96211,
+              27.96797
+            ],
+            [
+              85.96211,
+              27.96113
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "flood-sar-import-20261007-6a83b3-8",
+        "area_m2": 164503.0975341797,
+        "area_km2": 0.1645,
+        "confidence": 0.89,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.82246,
+              27.94199
+            ],
+            [
+              85.82539,
+              27.94199
+            ],
+            [
+              85.82539,
+              27.94609
+            ],
+            [
+              85.82246,
+              27.94609
+            ],
+            [
+              85.82246,
+              27.94199
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "flood-sar-import-20261007-6a83b3-11",
+        "area_m2": 148052.7877807874,
+        "area_km2": 0.1481,
+        "confidence": 0.89,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.9582,
+              28.04453
+            ],
+            [
+              85.96211,
+              28.04453
+            ],
+            [
+              85.96211,
+              28.04727
+            ],
+            [
+              85.9582,
+              28.04727
+            ],
+            [
+              85.9582,
+              28.04453
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "flood-sar-import-20261007-6a83b3-1",
+        "area_m2": 131602.47802730955,
+        "area_km2": 0.1316,
+        "confidence": 0.85,
+        "detection_method": "sar_backscatter_ensemble",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.97285,
+              27.92559
+            ],
+            [
+              85.9748,
+              27.92559
+            ],
+            [
+              85.9748,
+              27.92969
+            ],
+            [
+              85.97285,
+              27.92969
+            ],
+            [
+              85.97285,
+              27.92559
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "flood-sar-import-20261007-6a83b3-12",
+        "area_m2": 98701.85852052491,
+        "area_km2": 0.0987,
+        "confidence": 0.93,
+        "detection_method": "sar_backscatter_ensemble",
         "mndwi_validated": true
       }
     }

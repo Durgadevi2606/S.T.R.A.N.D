@@ -6,82 +6,14 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          85.895,
-          27.835
+          85.92,
+          27.882
         ]
       },
       "properties": {
-        "id": "nepal-bhotekoshi-20260826-b1",
-        "osm_id": 201,
-        "name": "Barhabise Main Bridge",
-        "damage_class": "damaged",
-        "buffer_flood_ratio": 0.45
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          85.908,
-          27.868
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-b2",
-        "osm_id": 202,
-        "name": "Larcha Suspension Bridge",
-        "damage_class": "destroyed",
-        "buffer_flood_ratio": 1.0
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          85.922,
-          27.898
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-b3",
-        "osm_id": 203,
-        "name": "Chaku Khola Concrete Bridge",
-        "damage_class": "destroyed",
-        "buffer_flood_ratio": 0.95
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          85.935,
-          27.935
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-b4",
-        "osm_id": 204,
-        "name": "Tatopani Friendship Bridge",
-        "damage_class": "destroyed",
-        "buffer_flood_ratio": 1.0
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          85.945,
-          27.97
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-b5",
-        "osm_id": 205,
-        "name": "Lipingle Bridge",
+        "id": "bridge-sar-import-20261007-6a83b3-01",
+        "osm_id": 2001,
+        "name": "Koshi Main Span Bridge",
         "damage_class": "destroyed",
         "buffer_flood_ratio": 0.88
       }
@@ -91,50 +23,33 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          85.875,
-          27.78
+          85.88,
+          27.833
         ]
       },
       "properties": {
-        "id": "nepal-bhotekoshi-20260826-b6",
-        "osm_id": 206,
-        "name": "Balephi Crossing",
-        "damage_class": "intact",
-        "buffer_flood_ratio": 0.0
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          85.87,
-          27.83
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-b7",
-        "osm_id": 207,
-        "name": "Maneshwara Footbridge",
-        "damage_class": "intact",
-        "buffer_flood_ratio": 0.0
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          85.93,
-          27.875
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-b8",
-        "osm_id": 208,
-        "name": "Marming Stream Bridge",
+        "id": "bridge-sar-import-20261007-6a83b3-02",
+        "osm_id": 2001,
+        "name": "Simariya Tributary Bridge",
         "damage_class": "damaged",
-        "buffer_flood_ratio": 0.3
+        "buffer_flood_ratio": 0.42
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.855,
+          27.973
+        ]
+      },
+      "properties": {
+        "id": "bridge-sar-import-20261007-6a83b3-03",
+        "osm_id": 2001,
+        "name": "Highland Bypass Bridge",
+        "damage_class": "intact",
+        "buffer_flood_ratio": 0.0
       }
     }
   ]

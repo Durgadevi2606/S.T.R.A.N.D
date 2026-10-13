@@ -8,71 +8,34 @@
         "coordinates": [
           [
             [
-              85.918,
-              27.892
+              85.93,
+              27.812
             ],
             [
-              85.924,
-              27.892
+              85.94,
+              27.812
             ],
             [
-              85.924,
-              27.888
+              85.94,
+              27.826
             ],
             [
-              85.918,
-              27.888
+              85.93,
+              27.826
             ],
             [
-              85.918,
-              27.892
+              85.93,
+              27.812
             ]
           ]
         ]
       },
       "properties": {
-        "id": "nepal-bhotekoshi-20260826-pz-1",
-        "area_m2": 125000.0,
-        "estimated_volume_m3": 850000.0,
-        "dam_elevation_m": 1420.0,
-        "risk_level": "critical"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Polygon",
-        "coordinates": [
-          [
-            [
-              85.938,
-              27.952
-            ],
-            [
-              85.944,
-              27.952
-            ],
-            [
-              85.944,
-              27.948
-            ],
-            [
-              85.938,
-              27.948
-            ],
-            [
-              85.938,
-              27.952
-            ]
-          ]
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-pz-2",
-        "area_m2": 78000.0,
-        "estimated_volume_m3": 420000.0,
-        "dam_elevation_m": 1890.0,
-        "risk_level": "high"
+        "id": "ponding-sar-import-20261007-6a83b3-01",
+        "area_m2": 240000.0,
+        "estimated_volume_m3": 45000.0,
+        "dam_elevation_m": 1250.0,
+        "risk_level": "silt_depression"
       }
     }
   ]

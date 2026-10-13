@@ -6,19 +6,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          85.9135,
-          27.8705
+          85.855,
+          27.987
         ]
       },
       "properties": {
-        "id": "nepal-bhotekoshi-20260826-hlz-4",
-        "area_m2": 1600.0,
-        "avg_slope_deg": 1.9,
-        "max_slope_deg": 3.4,
-        "elevation_m": 1380.0,
-        "nearest_settlement_id": "nepal-bhotekoshi-20260826-s5",
-        "dist_to_settlement_m": 480.0,
-        "surface_estimate": "flat_ridge"
+        "id": "hlz-sar-import-20261007-6a83b3-03",
+        "area_m2": 3100.0,
+        "avg_slope_deg": 0.9,
+        "max_slope_deg": 3.5,
+        "elevation_m": 710.0,
+        "nearest_settlement_id": "settlement-01",
+        "dist_to_settlement_m": 650.0,
+        "surface_estimate": "stadium_turf"
       }
     },
     {
@@ -26,39 +26,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          85.88,
-          27.7935
+          85.905,
+          27.917
         ]
       },
       "properties": {
-        "id": "nepal-bhotekoshi-20260826-hlz-5",
-        "area_m2": 3200.0,
-        "avg_slope_deg": 1.2,
-        "max_slope_deg": 2.1,
-        "elevation_m": 890.0,
-        "nearest_settlement_id": "nepal-bhotekoshi-20260826-s7",
-        "dist_to_settlement_m": 510.0,
-        "surface_estimate": "river_terrace"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          85.8935,
-          27.8435
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-hlz-1",
+        "id": "hlz-sar-import-20261007-6a83b3-01",
         "area_m2": 1850.0,
-        "avg_slope_deg": 2.1,
-        "max_slope_deg": 3.8,
-        "elevation_m": 1150.0,
-        "nearest_settlement_id": "nepal-bhotekoshi-20260826-s1",
-        "dist_to_settlement_m": 620.0,
-        "surface_estimate": "gravel_terrace"
+        "avg_slope_deg": 1.8,
+        "max_slope_deg": 3.5,
+        "elevation_m": 480.0,
+        "nearest_settlement_id": "settlement-01",
+        "dist_to_settlement_m": 1200.0,
+        "surface_estimate": "compacted_gravel"
       }
     },
     {
@@ -66,59 +46,19 @@
       "geometry": {
         "type": "Point",
         "coordinates": [
-          85.864,
-          27.8235
+          85.9625,
+          27.903
         ]
       },
       "properties": {
-        "id": "nepal-bhotekoshi-20260826-hlz-6",
-        "area_m2": 1950.0,
+        "id": "hlz-sar-import-20261007-6a83b3-02",
+        "area_m2": 2200.0,
         "avg_slope_deg": 2.4,
-        "max_slope_deg": 3.9,
-        "elevation_m": 1420.0,
-        "nearest_settlement_id": "nepal-bhotekoshi-20260826-s8",
-        "dist_to_settlement_m": 730.0,
-        "surface_estimate": "field_plateau"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          85.944,
-          27.9635
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-hlz-3",
-        "area_m2": 1420.0,
-        "avg_slope_deg": 3.2,
-        "max_slope_deg": 4.8,
-        "elevation_m": 2120.0,
-        "nearest_settlement_id": "nepal-bhotekoshi-20260826-s3",
-        "dist_to_settlement_m": 840.0,
-        "surface_estimate": "customs_helipad"
-      }
-    },
-    {
-      "type": "Feature",
-      "geometry": {
-        "type": "Point",
-        "coordinates": [
-          85.93,
-          27.9235
-        ]
-      },
-      "properties": {
-        "id": "nepal-bhotekoshi-20260826-hlz-2",
-        "area_m2": 2100.0,
-        "avg_slope_deg": 2.8,
-        "max_slope_deg": 4.2,
-        "elevation_m": 1680.0,
-        "nearest_settlement_id": "nepal-bhotekoshi-20260826-s2",
-        "dist_to_settlement_m": 950.0,
-        "surface_estimate": "school_ground"
+        "max_slope_deg": 3.5,
+        "elevation_m": 520.0,
+        "nearest_settlement_id": "settlement-01",
+        "dist_to_settlement_m": 1650.0,
+        "surface_estimate": "dry_pasture"
       }
     }
   ]

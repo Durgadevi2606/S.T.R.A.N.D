@@ -113,6 +113,21 @@ export default function App() {
     hlz: true,
     ponding: false,
   })
+  const activeLayersRef = useRef(activeLayers)
+  useEffect(() => {
+    activeLayersRef.current = activeLayers
+  }, [activeLayers])
+
+  const downloadSampleDataset = () => {
+    const link = document.createElement('a')
+    link.href = '/demo/STRAND_Sample_Disaster_Dataset_Nepal_BhoteKoshi.zip'
+    link.download = 'STRAND_Sample_Disaster_Dataset_Nepal_BhoteKoshi.zip'
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+    showToast('Sample disaster dataset downloading to your device!')
+  }
+
   const [settlementsList, setSettlementsList] = useState([])
   const [roadsList, setRoadsList] = useState([])
   const [bridgesList, setBridgesList] = useState([])
@@ -348,6 +363,8 @@ export default function App() {
       { name: 'ponding', url: `${API_BASE}/layers/${analysisId}/ponding` },
     ]
 
+    let collectedBounds = null
+
     for (const ep of layerEndpoints) {
       let geojson = null
       try {
@@ -380,9 +397,27 @@ export default function App() {
         }
         const leafletLayer = createLeafletLayer(ep.name, geojson)
         layerGroups.current[ep.name] = leafletLayer
-        if (layerVisibility[ep.name] && leafletLayer) {
+        const isVisible = activeLayersRef.current ? activeLayersRef.current[ep.name] : (ep.name !== 'ponding')
+        if (isVisible && leafletLayer) {
           leafletLayer.addTo(map.current)
+          try {
+            const b = leafletLayer.getBounds()
+            if (b && typeof b.isValid === 'function' && b.isValid()) {
+              if (!collectedBounds) {
+                collectedBounds = L.latLngBounds(b.getSouthWest(), b.getNorthEast())
+              } else {
+                collectedBounds.extend(b)
+              }
+            }
+          } catch (err) {}
         }
+      }
+    }
+
+    if (map.current) {
+      map.current.invalidateSize()
+      if (collectedBounds && typeof collectedBounds.isValid === 'function' && collectedBounds.isValid()) {
+        map.current.fitBounds(collectedBounds, { padding: [45, 45], maxZoom: 13 })
       }
     }
   }
@@ -1037,6 +1072,14 @@ export default function App() {
 
           {/* Action triggers & Operator Session */}
           <div className="flex items-center gap-3">
+            <button
+              onClick={downloadSampleDataset}
+              className="hidden md:flex items-center gap-1.5 bg-[#1c1b1d] hover:bg-[#201f22] text-[#e5e1e4] hover:text-white border border-zinc-700 hover:border-zinc-500 px-3 py-1.5 rounded-md text-[12px] font-medium transition-colors cursor-pointer"
+              title="Download sample SAR & GeoJSON package"
+            >
+              <span className="material-symbols-outlined text-[16px] text-sky-400">download</span>
+              <span>Sample Data (ZIP)</span>
+            </button>
             <button
               onClick={() => setShowUploadModal(true)}
               className="flex items-center gap-1.5 bg-[#201f22] hover:bg-[#2a2a2c] text-rose-300 border border-rose-500/50 hover:border-rose-400 px-3 py-1.5 rounded-md transition-all shadow-[0_0_12px_rgba(251,113,133,0.18)] cursor-pointer text-[12px] font-semibold tracking-wide uppercase"
@@ -1940,6 +1983,22 @@ export default function App() {
                     <p className="text-[10px] text-[#debfc1]/50 font-mono mt-0.5">Supports Sentinel-1 GRDH GeoTIFF, PNG, or JPEG</p>
                   </div>
                 )}
+              </div>
+
+              {/* Sample Data Download Helper */}
+              <div className="flex items-center justify-between p-2.5 rounded bg-[#161517] border border-zinc-800 text-[11px]">
+                <div className="flex items-center gap-2 text-[#debfc1]/70">
+                  <span className="material-symbols-outlined text-rose-400 text-[16px]">folder_zip</span>
+                  <span>Need radar imagery & sample vectors to test?</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={downloadSampleDataset}
+                  className="px-2.5 py-1 rounded bg-[#201f22] hover:bg-zinc-800 text-rose-300 border border-rose-500/30 hover:border-rose-400 font-mono text-[10px] cursor-pointer flex items-center gap-1 transition-colors"
+                >
+                  <span className="material-symbols-outlined text-[13px]">download</span>
+                  <span>Download Sample Dataset</span>
+                </button>
               </div>
 
               {uploadProgress && (
