@@ -1,0 +1,13 @@
+{
+  "analyses": [
+    {
+      "analysis_id": "nepal-bhotekoshi-20260826",
+      "name": "Nepal Bhote Koshi Glacier Flood",
+      "date": "2026-08-26",
+      "status": "completed",
+      "flood_area_km2": 14.85,
+      "settlements_isolated": 5,
+      "roads_severed_km": 21.4
+    }
+  ]
+}

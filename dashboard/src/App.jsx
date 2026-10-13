@@ -256,9 +256,25 @@ export default function App() {
         if (list.length > 0 && !selectedAnalysis) {
           selectAnalysis(list[0].analysis_id)
         }
+        return
       }
     } catch (e) {
-      console.error('Failed to fetch analyses:', e)
+      console.warn('Backend API offline, loading bundled demo data for Vercel:', e)
+    }
+
+    // Vercel Standalone Fallback
+    try {
+      const res = await fetch('/demo/analyses.json')
+      if (res.ok) {
+        const data = await res.json()
+        const list = data.analyses || []
+        setAnalyses(list)
+        if (list.length > 0 && !selectedAnalysis) {
+          selectAnalysis(list[0].analysis_id)
+        }
+      }
+    } catch (err) {
+      console.error('Demo data load failed:', err)
     }
   }
 
@@ -274,7 +290,21 @@ export default function App() {
       if (detailRes.ok) {
         const detail = await detailRes.json()
         setAnalysisData(detail)
+      } else {
+        throw new Error('API detail fetch failed')
       }
+    } catch (e) {
+      // Vercel Standalone Fallback
+      try {
+        const res = await fetch('/demo/detail.json')
+        if (res.ok) {
+          const detail = await res.json()
+          setAnalysisData(detail)
+        }
+      } catch (err) {}
+    }
+
+    try {
       await loadAllLayers(analysisId)
       await fetchPipelineLogs(analysisId)
       showToast(`Active run: ${analysisId}`)
@@ -296,7 +326,14 @@ export default function App() {
         setPipelineLogs(logs)
       }
     } catch (e) {
-      console.error('Failed to fetch logs:', e)
+      console.warn('API logs fetch failed, loading demo logs:', e)
+      setPipelineLogs([
+        { step: 'SAR Ingestion', status: 'completed', duration_ms: 1420 },
+        { step: 'Tri-Model Ensemble', status: 'completed', duration_ms: 680 },
+        { step: 'DEM Slope Filtering', status: 'completed', duration_ms: 350 },
+        { step: 'Network Reachability', status: 'completed', duration_ms: 540 },
+        { step: 'Tactical HLZ Finder', status: 'completed', duration_ms: 480 },
+      ])
     }
   }
 
@@ -312,28 +349,40 @@ export default function App() {
     ]
 
     for (const ep of layerEndpoints) {
+      let geojson = null
       try {
         const res = await fetch(ep.url, { headers: { 'X-API-Key': currentApiKey } })
-        if (!res.ok) continue
-        const geojson = await res.json()
-
-        if (ep.name === 'settlements') setSettlementsList(geojson.features || [])
-        if (ep.name === 'roads') setRoadsList(geojson.features || [])
-        if (ep.name === 'bridges') setBridgesList(geojson.features || [])
-        if (ep.name === 'hlz') setHlzList(geojson.features || [])
-
-        if (map.current) {
-          if (layerGroups.current[ep.name] && map.current.hasLayer(layerGroups.current[ep.name])) {
-            map.current.removeLayer(layerGroups.current[ep.name])
-          }
-          const leafletLayer = createLeafletLayer(ep.name, geojson)
-          layerGroups.current[ep.name] = leafletLayer
-          if (activeLayers[ep.name] && leafletLayer) {
-            map.current.addLayer(leafletLayer)
-          }
+        if (res.ok) {
+          geojson = await res.json()
         }
-      } catch (e) {
-        console.error(`Failed to load layer ${ep.name}:`, e)
+      } catch (e) {}
+
+      // Fallback to static demo data on Vercel
+      if (!geojson) {
+        try {
+          const demoRes = await fetch(`/demo/${ep.name}.json`)
+          if (demoRes.ok) {
+            geojson = await demoRes.json()
+          }
+        } catch (err) {}
+      }
+
+      if (!geojson) continue
+
+      if (ep.name === 'settlements') setSettlementsList(geojson.features || [])
+      if (ep.name === 'roads') setRoadsList(geojson.features || [])
+      if (ep.name === 'bridges') setBridgesList(geojson.features || [])
+      if (ep.name === 'hlz') setHlzList(geojson.features || [])
+
+      if (map.current) {
+        if (layerGroups.current[ep.name] && map.current.hasLayer(layerGroups.current[ep.name])) {
+          map.current.removeLayer(layerGroups.current[ep.name])
+        }
+        const leafletLayer = createLeafletLayer(ep.name, geojson)
+        layerGroups.current[ep.name] = leafletLayer
+        if (layerVisibility[ep.name] && leafletLayer) {
+          leafletLayer.addTo(map.current)
+        }
       }
     }
   }

@@ -1,0 +1,18 @@
+{
+  "analysis_id": "nepal-bhotekoshi-20260826",
+  "theater": "Bhote Koshi Gorge, Nepal",
+  "date": "2026-08-26",
+  "status": "completed",
+  "flood_area_km2": 14.85,
+  "roads_total_km": 84.6,
+  "roads_severed_km": 21.4,
+  "roads_partial_km": 12.8,
+  "bridges_total": 8,
+  "bridges_destroyed": 4,
+  "bridges_damaged": 2,
+  "settlements_total": 12,
+  "settlements_isolated": 5,
+  "settlements_degraded": 3,
+  "hlz_count": 6,
+  "ponding_count": 3
+}

@@ -1,0 +1,205 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            85.935,
+            27.935
+          ],
+          [
+            85.95,
+            27.98
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-r6",
+        "osm_id": 106,
+        "highway_type": "primary",
+        "name": "Araniko Highway (Kodari Border)",
+        "length_m": 5200.0,
+        "damage_class": "severed",
+        "flood_intersection_ratio": 0.95
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            85.922,
+            27.898
+          ],
+          [
+            85.935,
+            27.935
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-r5",
+        "osm_id": 105,
+        "highway_type": "primary",
+        "name": "Araniko Highway (Tatopani Approach)",
+        "length_m": 4500.0,
+        "damage_class": "severed",
+        "flood_intersection_ratio": 0.92
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            85.895,
+            27.835
+          ],
+          [
+            85.908,
+            27.868
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-r3",
+        "osm_id": 103,
+        "highway_type": "primary",
+        "name": "Araniko Highway (Barhabise Gorge)",
+        "length_m": 4100.0,
+        "damage_class": "severed",
+        "flood_intersection_ratio": 0.85
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            85.908,
+            27.868
+          ],
+          [
+            85.922,
+            27.898
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-r4",
+        "osm_id": 104,
+        "highway_type": "primary",
+        "name": "Araniko Highway (Chaku Pass)",
+        "length_m": 3900.0,
+        "damage_class": "severed",
+        "flood_intersection_ratio": 0.78
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            85.885,
+            27.805
+          ],
+          [
+            85.895,
+            27.835
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-r2",
+        "osm_id": 102,
+        "highway_type": "primary",
+        "name": "Araniko Highway Sec 2",
+        "length_m": 3600.0,
+        "damage_class": "partially_flooded",
+        "flood_intersection_ratio": 0.35
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            85.875,
+            27.78
+          ],
+          [
+            85.885,
+            27.805
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-r1",
+        "osm_id": 101,
+        "highway_type": "primary",
+        "name": "Araniko Highway Sec 1",
+        "length_m": 3200.0,
+        "damage_class": "intact",
+        "flood_intersection_ratio": 0.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            85.885,
+            27.805
+          ],
+          [
+            85.87,
+            27.83
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-r7",
+        "osm_id": 107,
+        "highway_type": "secondary",
+        "name": "Maneshwara Link Road",
+        "length_m": 3100.0,
+        "damage_class": "intact",
+        "flood_intersection_ratio": 0.0
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            85.908,
+            27.868
+          ],
+          [
+            85.93,
+            27.875
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-r8",
+        "osm_id": 108,
+        "highway_type": "tertiary",
+        "name": "Marming Ridge Track",
+        "length_m": 2600.0,
+        "damage_class": "partially_flooded",
+        "flood_intersection_ratio": 0.22
+      }
+    }
+  ]
+}

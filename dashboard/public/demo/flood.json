@@ -1,0 +1,151 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.9,
+              27.85
+            ],
+            [
+              85.908,
+              27.865
+            ],
+            [
+              85.925,
+              27.9
+            ],
+            [
+              85.932,
+              27.93
+            ],
+            [
+              85.928,
+              27.935
+            ],
+            [
+              85.918,
+              27.905
+            ],
+            [
+              85.902,
+              27.87
+            ],
+            [
+              85.895,
+              27.852
+            ],
+            [
+              85.9,
+              27.85
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-f1",
+        "area_m2": 6800000.0,
+        "area_km2": 6.8,
+        "confidence": 0.92,
+        "detection_method": "ensemble_majority",
+        "mndwi_validated": true
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.932,
+              27.93
+            ],
+            [
+              85.945,
+              27.96
+            ],
+            [
+              85.952,
+              27.985
+            ],
+            [
+              85.946,
+              27.99
+            ],
+            [
+              85.938,
+              27.962
+            ],
+            [
+              85.926,
+              27.933
+            ],
+            [
+              85.932,
+              27.93
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-f2",
+        "area_m2": 5200000.0,
+        "area_km2": 5.2,
+        "confidence": 0.88,
+        "detection_method": "ensemble_majority",
+        "mndwi_validated": false
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": [
+          [
+            [
+              85.885,
+              27.8
+            ],
+            [
+              85.892,
+              27.825
+            ],
+            [
+              85.9,
+              27.85
+            ],
+            [
+              85.895,
+              27.852
+            ],
+            [
+              85.886,
+              27.828
+            ],
+            [
+              85.88,
+              27.802
+            ],
+            [
+              85.885,
+              27.8
+            ]
+          ]
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-f3",
+        "area_m2": 2850000.0,
+        "area_km2": 2.85,
+        "confidence": 0.84,
+        "detection_method": "otsu_sar",
+        "mndwi_validated": true
+      }
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.935,
+          27.94
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-s2",
+        "osm_id": 302,
+        "name": "Tatopani",
+        "place_type": "village",
+        "estimated_population": 1850,
+        "isolation_status": "isolated",
+        "urgency_score": 0.96,
+        "pre_disaster_hub_dist_m": 14500.0,
+        "post_disaster_hub_dist_m": -1.0,
+        "has_clinic": false,
+        "nearest_hlz_id": "nepal-bhotekoshi-20260826-hlz-2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.948,
+          27.975
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-s3",
+        "osm_id": 303,
+        "name": "Kodari",
+        "place_type": "village",
+        "estimated_population": 940,
+        "isolation_status": "isolated",
+        "urgency_score": 0.92,
+        "pre_disaster_hub_dist_m": 19200.0,
+        "post_disaster_hub_dist_m": -1.0,
+        "has_clinic": false,
+        "nearest_hlz_id": "nepal-bhotekoshi-20260826-hlz-3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.952,
+          27.99
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-s4",
+        "osm_id": 304,
+        "name": "Liping",
+        "place_type": "hamlet",
+        "estimated_population": 420,
+        "isolation_status": "isolated",
+        "urgency_score": 0.89,
+        "pre_disaster_hub_dist_m": 21500.0,
+        "post_disaster_hub_dist_m": -1.0,
+        "has_clinic": false,
+        "nearest_hlz_id": "nepal-bhotekoshi-20260826-hlz-3"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.915,
+          27.88
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-s5",
+        "osm_id": 305,
+        "name": "Chaku",
+        "place_type": "village",
+        "estimated_population": 780,
+        "isolation_status": "isolated",
+        "urgency_score": 0.85,
+        "pre_disaster_hub_dist_m": 8200.0,
+        "post_disaster_hub_dist_m": -1.0,
+        "has_clinic": false,
+        "nearest_hlz_id": "nepal-bhotekoshi-20260826-hlz-4"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.925,
+          27.91
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-s6",
+        "osm_id": 306,
+        "name": "Hindi",
+        "place_type": "village",
+        "estimated_population": 650,
+        "isolation_status": "isolated",
+        "urgency_score": 0.81,
+        "pre_disaster_hub_dist_m": 11400.0,
+        "post_disaster_hub_dist_m": -1.0,
+        "has_clinic": false,
+        "nearest_hlz_id": "nepal-bhotekoshi-20260826-hlz-2"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.9,
+          27.84
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-s1",
+        "osm_id": 301,
+        "name": "Barhabise Bazar",
+        "place_type": "town",
+        "estimated_population": 5200,
+        "isolation_status": "degraded",
+        "urgency_score": 0.68,
+        "pre_disaster_hub_dist_m": 1200.0,
+        "post_disaster_hub_dist_m": 3600.0,
+        "has_clinic": true,
+        "nearest_hlz_id": "nepal-bhotekoshi-20260826-hlz-1"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.865,
+          27.82
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-s8",
+        "osm_id": 308,
+        "name": "Maneshwara",
+        "place_type": "village",
+        "estimated_population": 1200,
+        "isolation_status": "connected",
+        "urgency_score": 0.12,
+        "pre_disaster_hub_dist_m": 3400.0,
+        "post_disaster_hub_dist_m": 3400.0,
+        "has_clinic": false,
+        "nearest_hlz_id": "nepal-bhotekoshi-20260826-hlz-6"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          85.875,
+          27.79
+        ]
+      },
+      "properties": {
+        "id": "nepal-bhotekoshi-20260826-s7",
+        "osm_id": 307,
+        "name": "Balephi",
+        "place_type": "town",
+        "estimated_population": 4100,
+        "isolation_status": "connected",
+        "urgency_score": 0.05,
+        "pre_disaster_hub_dist_m": 500.0,
+        "post_disaster_hub_dist_m": 500.0,
+        "has_clinic": true,
+        "nearest_hlz_id": "nepal-bhotekoshi-20260826-hlz-5"
+      }
+    }
+  ]
+}
